@@ -1,27 +1,66 @@
 package com.egen.entity;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity(name = "VEHICLE_READING")
 public class VehicleReading {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@Column
 	private String vin;
+
+	@Column
 	private float latitude;
+
+	@Column
 	private float longitude;
-	private String timestamp;
+
+	@Column
+	private LocalDateTime timestamp;
+
+	@Column
 	private float fuelVolume;
+
+	@Column
 	private float speed;
+
+	@Column
 	private float engineHp;
+
+	@Column
 	private boolean checkEngineLightOn;
+
+	@Column
 	private boolean engineCoolantLow;
+
+	@Column
 	private boolean cruiseControlOn;
+
+	@Column(name = "ENGINE_RPM")
 	private float engineRpm;
+
+	@OneToOne
 	Tires tires;
 
 	public VehicleReading() {
 		super();
 	}
 
-	public VehicleReading(String vin, float latitude, float longitude, String timestamp, float fuelVolume, float speed,
-			float engineHp, boolean checkEngineLightOn, boolean engineCoolantLow, boolean cruiseControlOn,
-			float engineRpm, Tires tires) {
+	public VehicleReading(Long id, String vin, float latitude, float longitude, LocalDateTime timestamp,
+			float fuelVolume, float speed, float engineHp, boolean checkEngineLightOn, boolean engineCoolantLow,
+			boolean cruiseControlOn, float engineRpm, Tires tires) {
 		super();
+		this.id = id;
 		this.vin = vin;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -34,6 +73,14 @@ public class VehicleReading {
 		this.cruiseControlOn = cruiseControlOn;
 		this.engineRpm = engineRpm;
 		this.tires = tires;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getVin() {
@@ -60,11 +107,11 @@ public class VehicleReading {
 		this.longitude = longitude;
 	}
 
-	public String getTimestamp() {
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 
@@ -142,6 +189,7 @@ public class VehicleReading {
 		result = prime * result + Float.floatToIntBits(engineHp);
 		result = prime * result + Float.floatToIntBits(engineRpm);
 		result = prime * result + Float.floatToIntBits(fuelVolume);
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + Float.floatToIntBits(latitude);
 		result = prime * result + Float.floatToIntBits(longitude);
 		result = prime * result + Float.floatToIntBits(speed);
@@ -171,6 +219,11 @@ public class VehicleReading {
 		if (Float.floatToIntBits(engineRpm) != Float.floatToIntBits(other.engineRpm))
 			return false;
 		if (Float.floatToIntBits(fuelVolume) != Float.floatToIntBits(other.fuelVolume))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (Float.floatToIntBits(latitude) != Float.floatToIntBits(other.latitude))
 			return false;

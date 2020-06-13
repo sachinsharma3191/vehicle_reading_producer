@@ -2,34 +2,13 @@ package com.egen.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity(name = "VEHICLE")
 public class Vehicle {
-	@Id
-	private String id;
-
-	@Column(name = "VIN")
 	private String vin;
-
-	@Column(name = "MAKE")
 	private String make;
-
-	@Column(name = "NODEL")
 	private String model;
-
-	@Column(name = "YEAR")
 	private int year;
-
-	@Column(name = "RED_LINE_RPM")
 	private int redLineRpm;
-
-	@Column(name = "MAX_FUEL_VOLUME")
 	private int maxFuelVolume;
-
-	@Column(name = "LAST_SERVICE_DATE")
 	private LocalDateTime lastServiceDate;
 
 	public Vehicle() {

@@ -12,7 +12,7 @@ public class VehicleReading {
 	private boolean engineCoolantLow;
 	private boolean cruiseControlOn;
 	private float engineRpm;
-	Tires tires;
+	Tyre tires;
 
 	public VehicleReading() {
 		super();
@@ -20,7 +20,7 @@ public class VehicleReading {
 
 	public VehicleReading(String vin, float latitude, float longitude, String timestamp, float fuelVolume, float speed,
 			float engineHp, boolean checkEngineLightOn, boolean engineCoolantLow, boolean cruiseControlOn,
-			float engineRpm, Tires tires) {
+			float engineRpm, Tyre tires) {
 		super();
 		this.vin = vin;
 		this.latitude = latitude;
@@ -124,11 +124,11 @@ public class VehicleReading {
 		this.engineRpm = engineRpm;
 	}
 
-	public Tires getTires() {
+	public Tyre getTires() {
 		return tires;
 	}
 
-	public void setTires(Tires tires) {
+	public void setTires(Tyre tires) {
 		this.tires = tires;
 	}
 

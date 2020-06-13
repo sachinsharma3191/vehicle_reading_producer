@@ -2,22 +2,47 @@ package com.egen.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity(name = "VEHICLE")
 public class Vehicle {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@Column(name = "VIN")
 	private String vin;
+
+	@Column(name = "MAKE")
 	private String make;
+
+	@Column(name = "NODEL")
 	private String model;
+
+	@Column(name = "YEAR")
 	private int year;
+
+	@Column(name = "RED_LINE_RPM")
 	private int redLineRpm;
+
+	@Column(name = "MAX_FUEL_VOLUME")
 	private int maxFuelVolume;
+
+	@Column(name = "LAST_SERVICE_DATE")
 	private LocalDateTime lastServiceDate;
 
 	public Vehicle() {
 		super();
 	}
 
-	public Vehicle(String vin, String make, String model, int year, int redLineRpm, int maxFuelVolume,
+	public Vehicle(Long id, String vin, String make, String model, int year, int redLineRpm, int maxFuelVolume,
 			LocalDateTime lastServiceDate) {
 		super();
+		this.id = id;
 		this.vin = vin;
 		this.make = make;
 		this.model = model;
@@ -25,6 +50,14 @@ public class Vehicle {
 		this.redLineRpm = redLineRpm;
 		this.maxFuelVolume = maxFuelVolume;
 		this.lastServiceDate = lastServiceDate;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getVin() {
@@ -87,6 +120,7 @@ public class Vehicle {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastServiceDate == null) ? 0 : lastServiceDate.hashCode());
 		result = prime * result + ((make == null) ? 0 : make.hashCode());
 		result = prime * result + maxFuelVolume;
@@ -106,6 +140,11 @@ public class Vehicle {
 		if (getClass() != obj.getClass())
 			return false;
 		Vehicle other = (Vehicle) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
 		if (lastServiceDate == null) {
 			if (other.lastServiceDate != null)
 				return false;

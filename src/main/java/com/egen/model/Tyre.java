@@ -1,49 +1,21 @@
-package com.egen.entity;
+package com.egen.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity(name = "TYRE_PRESSURE")
-public class Tires {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
-	@Column
+public class Tyre {
 	private float frontLeft;
-	
-	@Column
 	private float frontRight;
-	
-	@Column
 	private float rearLeft;
-	
-	@Column
 	private float rearRight;
 
-	public Tires() {
+	public Tyre() {
 		super();
 	}
 
-	public Tires(Long id, float frontLeft, float frontRight, float rearLeft, float rearRight) {
+	public Tyre(float frontLeft, float frontRight, float rearLeft, float rearRight) {
 		super();
-		this.id = id;
 		this.frontLeft = frontLeft;
 		this.frontRight = frontRight;
 		this.rearLeft = rearLeft;
 		this.rearRight = rearRight;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public float getFrontLeft() {
@@ -99,7 +71,7 @@ public class Tires {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Tires other = (Tires) obj;
+		Tyre other = (Tyre) obj;
 		if (Float.floatToIntBits(frontLeft) != Float.floatToIntBits(other.frontLeft))
 			return false;
 		if (Float.floatToIntBits(frontRight) != Float.floatToIntBits(other.frontRight))
