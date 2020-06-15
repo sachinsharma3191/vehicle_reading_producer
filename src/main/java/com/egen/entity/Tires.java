@@ -1,17 +1,20 @@
 package com.egen.entity;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
 @Entity(name = "TYRE_PRESSURE")
+@JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Tires {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String id;
 
 	@Column
 	private float frontLeft;
@@ -27,9 +30,10 @@ public class Tires {
 
 	public Tires() {
 		super();
+		this.id = UUID.randomUUID().toString();
 	}
 
-	public Tires(Long id, float frontLeft, float frontRight, float rearLeft, float rearRight) {
+	public Tires(String id, float frontLeft, float frontRight, float rearLeft, float rearRight) {
 		super();
 		this.id = id;
 		this.frontLeft = frontLeft;
@@ -38,11 +42,11 @@ public class Tires {
 		this.rearRight = rearRight;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

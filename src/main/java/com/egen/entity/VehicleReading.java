@@ -1,20 +1,22 @@
 package com.egen.entity;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
 @Entity(name = "VEHICLE_READING")
+@JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class VehicleReading {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String id;
 
 	@Column
 	private String vin;
@@ -54,9 +56,10 @@ public class VehicleReading {
 
 	public VehicleReading() {
 		super();
+		this.id = UUID.randomUUID().toString();
 	}
 
-	public VehicleReading(Long id, String vin, float latitude, float longitude, LocalDateTime timestamp,
+	public VehicleReading(String id, String vin, float latitude, float longitude, LocalDateTime timestamp,
 			float fuelVolume, float speed, float engineHp, boolean checkEngineLightOn, boolean engineCoolantLow,
 			boolean cruiseControlOn, float engineRpm, Tires tires) {
 		super();
@@ -75,11 +78,11 @@ public class VehicleReading {
 		this.tires = tires;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

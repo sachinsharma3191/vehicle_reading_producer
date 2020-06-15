@@ -1,18 +1,20 @@
 package com.egen.entity;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
 @Entity(name = "VEHICLE")
+@JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Vehicle {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String id;
 
 	@Column(name = "VIN")
 	private String vin;
@@ -27,7 +29,7 @@ public class Vehicle {
 	private int year;
 
 	@Column(name = "RED_LINE_RPM")
-	private int redLineRpm;
+	private int redlineRpm;
 
 	@Column(name = "MAX_FUEL_VOLUME")
 	private int maxFuelVolume;
@@ -37,9 +39,10 @@ public class Vehicle {
 
 	public Vehicle() {
 		super();
+		this.id = UUID.randomUUID().toString();
 	}
 
-	public Vehicle(Long id, String vin, String make, String model, int year, int redLineRpm, int maxFuelVolume,
+	public Vehicle(String id, String vin, String make, String model, int year, int redlineRpm, int maxFuelVolume,
 			LocalDateTime lastServiceDate) {
 		super();
 		this.id = id;
@@ -47,16 +50,16 @@ public class Vehicle {
 		this.make = make;
 		this.model = model;
 		this.year = year;
-		this.redLineRpm = redLineRpm;
+		this.redlineRpm = redlineRpm;
 		this.maxFuelVolume = maxFuelVolume;
 		this.lastServiceDate = lastServiceDate;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -93,11 +96,11 @@ public class Vehicle {
 	}
 
 	public int getRedLineRpm() {
-		return redLineRpm;
+		return redlineRpm;
 	}
 
-	public void setRedLineRpm(int redLineRpm) {
-		this.redLineRpm = redLineRpm;
+	public void setRedLineRpm(int redlineRpm) {
+		this.redlineRpm = redlineRpm;
 	}
 
 	public int getMaxFuelVolume() {
@@ -125,7 +128,7 @@ public class Vehicle {
 		result = prime * result + ((make == null) ? 0 : make.hashCode());
 		result = prime * result + maxFuelVolume;
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
-		result = prime * result + redLineRpm;
+		result = prime * result + redlineRpm;
 		result = prime * result + ((vin == null) ? 0 : vin.hashCode());
 		result = prime * result + year;
 		return result;
@@ -162,7 +165,7 @@ public class Vehicle {
 				return false;
 		} else if (!model.equals(other.model))
 			return false;
-		if (redLineRpm != other.redLineRpm)
+		if (redlineRpm != other.redlineRpm)
 			return false;
 		if (vin == null) {
 			if (other.vin != null)
@@ -176,8 +179,8 @@ public class Vehicle {
 
 	@Override
 	public String toString() {
-		return "Vehicle [vin=" + vin + ", make=" + make + ", model=" + model + ", year=" + year + ", redLineRpm="
-				+ redLineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate=" + lastServiceDate + "]";
+		return "Vehicle [vin=" + vin + ", make=" + make + ", model=" + model + ", year=" + year + ", redlineRpm="
+				+ redlineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate=" + lastServiceDate + "]";
 	}
 
 }

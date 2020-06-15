@@ -1,11 +1,10 @@
 package com.egen.repository;
 
+import com.egen.entity.VehicleReading;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.egen.entity.Vehicle;
-
 @Repository
-public interface VehicleRepository extends CrudRepository<Vehicle,String> {
+public interface VehicleReadingRepository extends CrudRepository<VehicleReading,String>  {
 
 }
