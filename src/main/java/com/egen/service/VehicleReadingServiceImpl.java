@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import com.egen.dto.VehicleAlert;
 import com.egen.entity.Tires;
 import com.egen.entity.Vehicle;
 import com.egen.entity.VehicleReading;
@@ -18,8 +19,6 @@ import com.egen.exception.VehicleServiceException;
 import com.egen.repository.VehicleReadingRepository;
 import com.egen.repository.VehicleRepository;
 import com.egen.utils.CommonUtils;
-import com.egen.dto.VehicleAlert;
-import com.egen.dto.VehicleAlert.VehicleAlertBuilder;
 
 @Service
 @Transactional
@@ -33,8 +32,6 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 
 	@Autowired
 	RestTemplate restTemplate;
-
-	private VehicleAlert alert;
 
 	@Override
 	public List<VehicleReading> findAll() {
