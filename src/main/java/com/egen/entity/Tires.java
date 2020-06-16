@@ -18,13 +18,13 @@ public class Tires {
 
 	@Column
 	private float frontLeft;
-	
+
 	@Column
 	private float frontRight;
-	
+
 	@Column
 	private float rearLeft;
-	
+
 	@Column
 	private float rearRight;
 
@@ -54,30 +54,28 @@ public class Tires {
 		return frontLeft;
 	}
 
-	public float getFrontRight() {
-		return frontRight;
-	}
-
-	public float getRearLeft() {
-		return rearLeft;
-	}
-
-	public float getRearRight() {
-		return rearRight;
-	}
-
-	// Setter Methods
-
 	public void setFrontLeft(float frontLeft) {
 		this.frontLeft = frontLeft;
+	}
+
+	public float getFrontRight() {
+		return frontRight;
 	}
 
 	public void setFrontRight(float frontRight) {
 		this.frontRight = frontRight;
 	}
 
+	public float getRearLeft() {
+		return rearLeft;
+	}
+
 	public void setRearLeft(float rearLeft) {
 		this.rearLeft = rearLeft;
+	}
+
+	public float getRearRight() {
+		return rearRight;
 	}
 
 	public void setRearRight(float rearRight) {
@@ -90,6 +88,7 @@ public class Tires {
 		int result = 1;
 		result = prime * result + Float.floatToIntBits(frontLeft);
 		result = prime * result + Float.floatToIntBits(frontRight);
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + Float.floatToIntBits(rearLeft);
 		result = prime * result + Float.floatToIntBits(rearRight);
 		return result;
@@ -107,6 +106,11 @@ public class Tires {
 		if (Float.floatToIntBits(frontLeft) != Float.floatToIntBits(other.frontLeft))
 			return false;
 		if (Float.floatToIntBits(frontRight) != Float.floatToIntBits(other.frontRight))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (Float.floatToIntBits(rearLeft) != Float.floatToIntBits(other.rearLeft))
 			return false;

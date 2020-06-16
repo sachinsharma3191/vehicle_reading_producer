@@ -1,61 +1,26 @@
 package com.egen.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.egen.entity.Vehicle;
-import com.egen.entity.VehicleReading;
-import com.egen.exception.VehicleServiceException;
-import com.egen.repository.VehicleReadingRepository;
-import com.egen.repository.VehicleRepository;
 
-@Service
-public class VehicleService {
+public interface VehicleService {
 
-	@Autowired
-	VehicleReadingRepository vehicleReadingRepository;
+	public List<Vehicle> findAll();
 
-	@Autowired
-	VehicleRepository vehicleRepository;
+	public Vehicle findOne(String id);
 
-	public String addVehicles(List<Vehicle> vehicles) {
-		try {
-			vehicleRepository.saveAll(vehicles);
-		} catch (Exception e) {
-			throw new VehicleServiceException(e.getMessage(), e.getCause());
-		}
+	public Vehicle create(Vehicle emp);
 
-		return "Vehicles Information stored in database";
-	}
+	public Vehicle update(String id, Vehicle emp);
 
-	public List<Vehicle> getVehicleList() {
-		List<Vehicle> list = new ArrayList<>();
-		try {
-			list = (List<Vehicle>) vehicleRepository.findAll();
-		} catch (Exception e) {
-			throw new VehicleServiceException(e.getMessage(), e.getCause());
-		}
-		return list;
-	}
+	public void delete(String id);
 
-	public void addVehicleReading(VehicleReading reading) {
-		try {
-			// vehicleRepository.save(entity)
-		} catch (Exception e) {
-			throw new VehicleServiceException(e.getMessage(), e.getCause());
-		}
-	}
+	public Vehicle findByVin(String vin);
 
-	public List<VehicleReading> getAllReading() {
-		List<VehicleReading> list = new ArrayList<>();
-		try {
-			list = (List<VehicleReading>) vehicleReadingRepository.findAll();
-		} catch (Exception e) {
-			throw new VehicleServiceException(e.getMessage(), e.getCause());
-		}
-		return list;
-	}
+	public List<Vehicle> findByMake(String make);
+
+	public List<Vehicle> findByModel(String model);
+
+	public List<Vehicle> findByYear(int year);
 }

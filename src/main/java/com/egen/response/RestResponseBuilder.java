@@ -42,9 +42,15 @@ public class RestResponseBuilder {
 		productResponse.setStatus(httpStatus);
 		productResponse.setMessage(response);
 		return buildResponseEntity(productResponse);
-
 	}
 
+	public static <T> ResponseEntity<Object> buildResponseEntity(Object response, String message,
+			HttpStatus httpStatus) {
+		ProductResponse<T> productResponse = new ProductResponse<T>();
+		productResponse.setStatus(httpStatus);
+		productResponse.setMessage(response.toString());
+		return buildResponseEntity(productResponse);
+	}
 	/**
 	 * 
 	 * @param productErrorResponse

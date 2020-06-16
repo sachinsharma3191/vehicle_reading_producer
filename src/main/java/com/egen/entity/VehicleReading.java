@@ -3,9 +3,11 @@ package com.egen.entity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -51,7 +53,8 @@ public class VehicleReading {
 	@Column(name = "ENGINE_RPM")
 	private float engineRpm;
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "id")
 	Tires tires;
 
 	public VehicleReading() {
