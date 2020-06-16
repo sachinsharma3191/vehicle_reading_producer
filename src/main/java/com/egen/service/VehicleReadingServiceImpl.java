@@ -22,7 +22,6 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 
 	@Override
 	public List<VehicleReading> findAll() {
-
 		List<VehicleReading> list = new ArrayList<>();
 		try {
 			list = (List<VehicleReading>) repository.findAll();
@@ -48,19 +47,19 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 	}
 
 	@Override
-	public VehicleReading update(String id, VehicleReading reading) {
-		Optional<VehicleReading> existing = repository.findById(id);
+	public VehicleReading update(String vin, VehicleReading reading) {
+		Optional<VehicleReading> existing = repository.findByVin(vin);
 		if (!existing.isPresent()) {
-			throw new ResourceNotFoundException("Vehicle Reading with vin " + id + " doesn't exist.");
+			throw new ResourceNotFoundException("Vehicle Reading with vin " + vin + " doesn't exist.");
 		}
 		return repository.save(reading);
 	}
 
 	@Override
-	public void delete(String id) {
-		Optional<VehicleReading> existing = repository.findById(id);
+	public void delete(String vin) {
+		Optional<VehicleReading> existing =  repository.findByVin(vin);
 		if (!existing.isPresent()) {
-			throw new ResourceNotFoundException("Vehicle Reading with vin " + id + " doesn't exist.");
+			throw new ResourceNotFoundException("Vehicle Reading with vin " + vin + " doesn't exist.");
 		}
 		repository.delete(existing.get());
 	}

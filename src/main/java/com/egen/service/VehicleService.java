@@ -15,6 +15,8 @@ public interface VehicleService {
 	public Vehicle update(String id, Vehicle emp);
 
 	public void delete(String id);
+	
+	public String saveAll(List<Vehicle> vehicles);
 
 	public Vehicle findByVin(String vin);
 

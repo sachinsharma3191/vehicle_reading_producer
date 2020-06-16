@@ -1,7 +1,5 @@
 package com.egen.controller;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +25,7 @@ public class VehicleController {
 
 	@PostMapping(value = "/vehicles")
 	public ResponseEntity<Object> addVehicles(@RequestBody List<Vehicle> vehicles) {
-		HashSet<Vehicle> response = new HashSet<>();
-		for (Vehicle vehicle : vehicles) {
-			response.add(vehicleService.create(vehicle));
-		}
-		return RestResponseBuilder.buildResponseEntity(new ArrayList<>(response), "Success", HttpStatus.CREATED);
+		return RestResponseBuilder.buildResponseEntity(vehicleService.saveAll(vehicles), "Success", HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/vehicles/all")

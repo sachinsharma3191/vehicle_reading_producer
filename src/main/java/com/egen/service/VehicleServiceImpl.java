@@ -32,9 +32,9 @@ public class VehicleServiceImpl implements VehicleService {
 	}
 
 	@Override
-	public Vehicle findOne(String id) {
-		return repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Vehicle  with vin " + id + " not found"));
+	public Vehicle findOne(String vin) {
+		return repository.findByVin(vin)
+				.orElseThrow(() -> new ResourceNotFoundException("Vehicle with vin " + vin + " not found"));
 	}
 
 	@Override
@@ -50,25 +50,25 @@ public class VehicleServiceImpl implements VehicleService {
 				return saved == 1 ? vehicle : Vehicle.getEmptyInstance();
 			}
 		} catch (Exception e) {
-			throw new ResourceNotFoundException("Failed to save ", e.getCause());
+			throw new VehicleServiceException("Failed to save ", e.getCause());
 		}
 		return vehicle;
 	}
 
 	@Override
-	public Vehicle update(String id, Vehicle vehicle) {
-		Optional<Vehicle> existing = repository.findById(id);
+	public Vehicle update(String vin, Vehicle vehicle) {
+		Optional<Vehicle> existing = repository.findByVin(vin);
 		if (!existing.isPresent()) {
-			throw new ResourceNotFoundException("Vehicle with vin " + id + " doesn't exist.");
+			throw new ResourceNotFoundException("Vehicle with vin " + vin + " doesn't exist.");
 		}
 		return repository.save(vehicle);
 	}
 
 	@Override
-	public void delete(String id) {
-		Optional<Vehicle> existing = repository.findById(id);
+	public void delete(String vin) {
+		Optional<Vehicle> existing = repository.findByVin(vin);
 		if (!existing.isPresent()) {
-			throw new VehicleServiceException("Vehicle with vin " + id + " doesn't exist.");
+			throw new ResourceNotFoundException("Vehicle with vin " + vin + " doesn't exist.");
 		}
 		repository.delete(existing.get());
 	}
@@ -77,7 +77,7 @@ public class VehicleServiceImpl implements VehicleService {
 	public Vehicle findByVin(String vin) {
 		Optional<Vehicle> existing = repository.findByVin(vin);
 		if (!existing.isPresent()) {
-			throw new VehicleServiceException("Employee with id " + vin + " doesn't exist.");
+			throw new ResourceNotFoundException("Vehicle with id " + vin + " doesn't exist.");
 		}
 		return existing.get();
 	}
@@ -95,5 +95,15 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public List<Vehicle> findByModel(String model) {
 		return repository.findByModel(model);
+	}
+
+	@Override
+	public String saveAll(List<Vehicle> vehicles) {
+		try {
+			repository.saveAll(vehicles);
+		} catch (Exception e) {
+			throw new VehicleServiceException("Failed to save ", e.getCause());
+		}
+		return "Saved";
 	}
 }
