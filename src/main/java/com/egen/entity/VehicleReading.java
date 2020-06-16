@@ -17,8 +17,6 @@ import lombok.*;
 
 @Entity(name = "VEHICLE_READING")
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class VehicleReading {
@@ -60,7 +58,6 @@ public class VehicleReading {
 	@JoinTable(name = "VEHICLE_TYRE_READING", joinColumns = @JoinColumn(name = "VIN"), inverseJoinColumns = @JoinColumn(name = "ID"))
 	Tires tires;
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -78,6 +75,102 @@ public class VehicleReading {
 		result = prime * result + ((tires == null) ? 0 : tires.hashCode());
 		result = prime * result + ((vin == null) ? 0 : vin.hashCode());
 		return result;
+	}
+
+	public String getVin() {
+		return vin;
+	}
+
+	public void setVin(String vin) {
+		this.vin = vin;
+	}
+
+	public float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
+	}
+
+	public float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
+
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public float getFuelVolume() {
+		return fuelVolume;
+	}
+
+	public void setFuelVolume(float fuelVolume) {
+		this.fuelVolume = fuelVolume;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	public float getEngineHp() {
+		return engineHp;
+	}
+
+	public void setEngineHp(float engineHp) {
+		this.engineHp = engineHp;
+	}
+
+	public boolean isCheckEngineLightOn() {
+		return checkEngineLightOn;
+	}
+
+	public void setCheckEngineLightOn(boolean checkEngineLightOn) {
+		this.checkEngineLightOn = checkEngineLightOn;
+	}
+
+	public boolean isEngineCoolantLow() {
+		return engineCoolantLow;
+	}
+
+	public void setEngineCoolantLow(boolean engineCoolantLow) {
+		this.engineCoolantLow = engineCoolantLow;
+	}
+
+	public boolean isCruiseControlOn() {
+		return cruiseControlOn;
+	}
+
+	public void setCruiseControlOn(boolean cruiseControlOn) {
+		this.cruiseControlOn = cruiseControlOn;
+	}
+
+	public float getEngineRpm() {
+		return engineRpm;
+	}
+
+	public void setEngineRpm(float engineRpm) {
+		this.engineRpm = engineRpm;
+	}
+
+	public Tires getTires() {
+		return tires;
+	}
+
+	public void setTires(Tires tires) {
+		this.tires = tires;
 	}
 
 	@Override

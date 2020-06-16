@@ -75,7 +75,6 @@ public class CommonUtils {
 		return list == null || list.isEmpty() || list.contains(null) || list.contains("");
 	}
 
-	
 	private CommonUtils() {
 
 	}

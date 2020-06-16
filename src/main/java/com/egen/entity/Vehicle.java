@@ -9,7 +9,11 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
+import lombok.*;
+
 @Entity(name = "VEHICLE")
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Vehicle {
 
@@ -34,22 +38,6 @@ public class Vehicle {
 
 	@Column(name = "LAST_SERVICE_DATE")
 	private LocalDateTime lastServiceDate;
-
-	public Vehicle() {
-		super();
-	}
-
-	public Vehicle(String vin, String make, String model, int year, int redlineRpm, int maxFuelVolume,
-			LocalDateTime lastServiceDate) {
-		super();
-		this.vin = vin;
-		this.make = make;
-		this.model = model;
-		this.year = year;
-		this.redlineRpm = redlineRpm;
-		this.maxFuelVolume = maxFuelVolume;
-		this.lastServiceDate = lastServiceDate;
-	}
 
 	public String getVin() {
 		return vin;

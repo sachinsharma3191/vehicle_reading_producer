@@ -15,4 +15,6 @@ public interface VehicleReadingService {
 	public VehicleReading update(String id, VehicleReading reading);
 
 	void delete(String id);
+
+	public boolean createAlert(VehicleReading reading);
 }

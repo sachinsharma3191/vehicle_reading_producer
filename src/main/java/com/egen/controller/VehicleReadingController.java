@@ -43,5 +43,7 @@ public class VehicleReadingController {
 	public ResponseEntity<Object> getAllReadings(@PathVariable("vin") String vin) {
 		return RestResponseBuilder.buildResponseEntity(readingService.findOne(vin), "Success", HttpStatus.OK);
 	}
+	
+	
 
 }
