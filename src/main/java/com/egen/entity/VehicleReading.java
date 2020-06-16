@@ -13,8 +13,14 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
+import lombok.*;
+
 @Entity(name = "VEHICLE_READING")
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class VehicleReading {
 	@Id
 	@Column
@@ -54,123 +60,6 @@ public class VehicleReading {
 	@JoinTable(name = "VEHICLE_TYRE_READING", joinColumns = @JoinColumn(name = "VIN"), inverseJoinColumns = @JoinColumn(name = "ID"))
 	Tires tires;
 
-	public VehicleReading() {
-		super();
-	}
-
-	public VehicleReading(String vin, float latitude, float longitude, LocalDateTime timestamp, float fuelVolume,
-			float speed, float engineHp, boolean checkEngineLightOn, boolean engineCoolantLow, boolean cruiseControlOn,
-			float engineRpm, Tires tires) {
-		super();
-		this.vin = vin;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.timestamp = timestamp;
-		this.fuelVolume = fuelVolume;
-		this.speed = speed;
-		this.engineHp = engineHp;
-		this.checkEngineLightOn = checkEngineLightOn;
-		this.engineCoolantLow = engineCoolantLow;
-		this.cruiseControlOn = cruiseControlOn;
-		this.engineRpm = engineRpm;
-		this.tires = tires;
-	}
-
-	public String getVin() {
-		return vin;
-	}
-
-	public void setVin(String vin) {
-		this.vin = vin;
-	}
-
-	public float getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(float latitude) {
-		this.latitude = latitude;
-	}
-
-	public float getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(float longitude) {
-		this.longitude = longitude;
-	}
-
-	public LocalDateTime getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(LocalDateTime timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	public float getFuelVolume() {
-		return fuelVolume;
-	}
-
-	public void setFuelVolume(float fuelVolume) {
-		this.fuelVolume = fuelVolume;
-	}
-
-	public float getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(float speed) {
-		this.speed = speed;
-	}
-
-	public float getEngineHp() {
-		return engineHp;
-	}
-
-	public void setEngineHp(float engineHp) {
-		this.engineHp = engineHp;
-	}
-
-	public boolean isCheckEngineLightOn() {
-		return checkEngineLightOn;
-	}
-
-	public void setCheckEngineLightOn(boolean checkEngineLightOn) {
-		this.checkEngineLightOn = checkEngineLightOn;
-	}
-
-	public boolean isEngineCoolantLow() {
-		return engineCoolantLow;
-	}
-
-	public void setEngineCoolantLow(boolean engineCoolantLow) {
-		this.engineCoolantLow = engineCoolantLow;
-	}
-
-	public boolean isCruiseControlOn() {
-		return cruiseControlOn;
-	}
-
-	public void setCruiseControlOn(boolean cruiseControlOn) {
-		this.cruiseControlOn = cruiseControlOn;
-	}
-
-	public float getEngineRpm() {
-		return engineRpm;
-	}
-
-	public void setEngineRpm(float engineRpm) {
-		this.engineRpm = engineRpm;
-	}
-
-	public Tires getTires() {
-		return tires;
-	}
-
-	public void setTires(Tires tires) {
-		this.tires = tires;
-	}
 
 	@Override
 	public int hashCode() {

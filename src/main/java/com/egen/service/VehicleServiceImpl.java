@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.egen.entity.Vehicle;
 import com.egen.exception.VehicleServiceException;
+import com.egen.exception.ResourceNotFoundException;
 import com.egen.repository.VehicleRepository;
 
 @Service
@@ -33,7 +34,7 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Vehicle findOne(String id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new VehicleServiceException("Vehicle  with id" + id + " not found"));
+				.orElseThrow(() -> new ResourceNotFoundException("Vehicle  with vin " + id + " not found"));
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public class VehicleServiceImpl implements VehicleService {
 				return saved == 1 ? vehicle : Vehicle.getEmptyInstance();
 			}
 		} catch (Exception e) {
-			throw new VehicleServiceException("Failed to save ", e.getCause());
+			throw new ResourceNotFoundException("Failed to save ", e.getCause());
 		}
 		return vehicle;
 	}
@@ -58,7 +59,7 @@ public class VehicleServiceImpl implements VehicleService {
 	public Vehicle update(String id, Vehicle vehicle) {
 		Optional<Vehicle> existing = repository.findById(id);
 		if (!existing.isPresent()) {
-			throw new VehicleServiceException("Employee with id " + id + " doesn't exist.");
+			throw new ResourceNotFoundException("Vehicle with vin " + id + " doesn't exist.");
 		}
 		return repository.save(vehicle);
 	}
@@ -67,7 +68,7 @@ public class VehicleServiceImpl implements VehicleService {
 	public void delete(String id) {
 		Optional<Vehicle> existing = repository.findById(id);
 		if (!existing.isPresent()) {
-			throw new VehicleServiceException("Employee with id " + id + " doesn't exist.");
+			throw new VehicleServiceException("Vehicle with vin " + id + " doesn't exist.");
 		}
 		repository.delete(existing.get());
 	}

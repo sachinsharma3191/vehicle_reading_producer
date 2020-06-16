@@ -1,0 +1,272 @@
+warning: LF will be replaced by CRLF in pom.xml.
+The file will have its original line endings in your working directory
+[1mdiff --git a/pom.xml b/pom.xml[m
+[1mindex 5cedeb5..74db2b7 100644[m
+[1m--- a/pom.xml[m
+[1m+++ b/pom.xml[m
+[36m@@ -60,6 +60,11 @@[m
+ 			<artifactId>springfox-swagger2</artifactId>[m
+ 			<version>2.8.0</version>[m
+ 		</dependency>[m
+[32m+[m		[32m<dependency>[m
+[32m+[m			[32m<groupId>org.projectlombok</groupId>[m
+[32m+[m			[32m<artifactId>lombok</artifactId>[m
+[32m+[m			[32m<scope>provided</scope>[m
+[32m+[m		[32m</dependency>[m
+ 		<dependency>[m
+ 			<groupId>io.springfox</groupId>[m
+ 			<artifactId>springfox-swagger-ui</artifactId>[m
+[1mdiff --git a/src/main/java/com/egen/entity/Tires.java b/src/main/java/com/egen/entity/Tires.java[m
+[1mindex f582a9f..a1bf115 100644[m
+[1m--- a/src/main/java/com/egen/entity/Tires.java[m
+[1m+++ b/src/main/java/com/egen/entity/Tires.java[m
+[36m@@ -9,7 +9,12 @@[m [mimport javax.persistence.Id;[m
+ import com.fasterxml.jackson.annotation.JsonAutoDetect;[m
+ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;[m
+ [m
+[32m+[m[32mimport lombok.*;[m[41m[m
+[32m+[m[41m[m
+ @Entity(name = "TYRE_PRESSURE")[m
+[32m+[m[32m@Setter[m[41m[m
+[32m+[m[32m@Getter[m[41m[m
+[32m+[m[32m@AllArgsConstructor[m[41m[m
+ @JsonAutoDetect(fieldVisibility = Visibility.ANY)[m
+ public class Tires {[m
+ [m
+[36m@@ -33,55 +38,6 @@[m [mpublic class Tires {[m
+ 		this.id = UUID.randomUUID().toString();[m
+ 	}[m
+ [m
+[31m-	public Tires(String id, float frontLeft, float frontRight, float rearLeft, float rearRight) {[m
+[31m-		super();[m
+[31m-		this.id = id;[m
+[31m-		this.frontLeft = frontLeft;[m
+[31m-		this.frontRight = frontRight;[m
+[31m-		this.rearLeft = rearLeft;[m
+[31m-		this.rearRight = rearRight;[m
+[31m-	}[m
+[31m-[m
+[31m-	public String getId() {[m
+[31m-		return id;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setId(String id) {[m
+[31m-		this.id = id;[m
+[31m-	}[m
+[31m-[m
+[31m-	public float getFrontLeft() {[m
+[31m-		return frontLeft;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setFrontLeft(float frontLeft) {[m
+[31m-		this.frontLeft = frontLeft;[m
+[31m-	}[m
+[31m-[m
+[31m-	public float getFrontRight() {[m
+[31m-		return frontRight;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setFrontRight(float frontRight) {[m
+[31m-		this.frontRight = frontRight;[m
+[31m-	}[m
+[31m-[m
+[31m-	public float getRearLeft() {[m
+[31m-		return rearLeft;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setRearLeft(float rearLeft) {[m
+[31m-		this.rearLeft = rearLeft;[m
+[31m-	}[m
+[31m-[m
+[31m-	public float getRearRight() {[m
+[31m-		return rearRight;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setRearRight(float rearRight) {[m
+[31m-		this.rearRight = rearRight;[m
+[31m-	}[m
+[31m-[m
+ 	@Override[m
+ 	public int hashCode() {[m
+ 		final int prime = 31;[m
+[1mdiff --git a/src/main/java/com/egen/entity/VehicleReading.java b/src/main/java/com/egen/entity/VehicleReading.java[m
+[1mindex 1a7294a..1708db1 100644[m
+[1m--- a/src/main/java/com/egen/entity/VehicleReading.java[m
+[1m+++ b/src/main/java/com/egen/entity/VehicleReading.java[m
+[36m@@ -13,8 +13,14 @@[m [mimport javax.persistence.OneToOne;[m
+ import com.fasterxml.jackson.annotation.JsonAutoDetect;[m
+ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;[m
+ [m
+[32m+[m[32mimport lombok.*;[m[41m[m
+[32m+[m[41m[m
+ @Entity(name = "VEHICLE_READING")[m
+ @JsonAutoDetect(fieldVisibility = Visibility.ANY)[m
+[32m+[m[32m@Setter[m[41m[m
+[32m+[m[32m@Getter[m[41m[m
+[32m+[m[32m@NoArgsConstructor[m[41m[m
+[32m+[m[32m@AllArgsConstructor[m[41m[m
+ public class VehicleReading {[m
+ 	@Id[m
+ 	@Column[m
+[36m@@ -54,123 +60,6 @@[m [mpublic class VehicleReading {[m
+ 	@JoinTable(name = "VEHICLE_TYRE_READING", joinColumns = @JoinColumn(name = "VIN"), inverseJoinColumns = @JoinColumn(name = "ID"))[m
+ 	Tires tires;[m
+ [m
+[31m-	public VehicleReading() {[m
+[31m-		super();[m
+[31m-	}[m
+[31m-[m
+[31m-	public VehicleReading(String vin, float latitude, float longitude, LocalDateTime timestamp, float fuelVolume,[m
+[31m-			float speed, float engineHp, boolean checkEngineLightOn, boolean engineCoolantLow, boolean cruiseControlOn,[m
+[31m-			float engineRpm, Tires tires) {[m
+[31m-		super();[m
+[31m-		this.vin = vin;[m
+[31m-		this.latitude = latitude;[m
+[31m-		this.longitude = longitude;[m
+[31m-		this.timestamp = timestamp;[m
+[31m-		this.fuelVolume = fuelVolume;[m
+[31m-		this.speed = speed;[m
+[31m-		this.engineHp = engineHp;[m
+[31m-		this.checkEngineLightOn = checkEngineLightOn;[m
+[31m-		this.engineCoolantLow = engineCoolantLow;[m
+[31m-		this.cruiseControlOn = cruiseControlOn;[m
+[31m-		this.engineRpm = engineRpm;[m
+[31m-		this.tires = tires;[m
+[31m-	}[m
+[31m-[m
+[31m-	public String getVin() {[m
+[31m-		return vin;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setVin(String vin) {[m
+[31m-		this.vin = vin;[m
+[31m-	}[m
+[31m-[m
+[31m-	public float getLatitude() {[m
+[31m-		return latitude;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setLatitude(float latitude) {[m
+[31m-		this.latitude = latitude;[m
+[31m-	}[m
+[31m-[m
+[31m-	public float getLongitude() {[m
+[31m-		return longitude;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setLongitude(float longitude) {[m
+[31m-		this.longitude = longitude;[m
+[31m-	}[m
+[31m-[m
+[31m-	public LocalDateTime getTimestamp() {[m
+[31m-		return timestamp;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setTimestamp(LocalDateTime timestamp) {[m
+[31m-		this.timestamp = timestamp;[m
+[31m-	}[m
+[31m-[m
+[31m-	public float getFuelVolume() {[m
+[31m-		return fuelVolume;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setFuelVolume(float fuelVolume) {[m
+[31m-		this.fuelVolume = fuelVolume;[m
+[31m-	}[m
+[31m-[m
+[31m-	public float getSpeed() {[m
+[31m-		return speed;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setSpeed(float speed) {[m
+[31m-		this.speed = speed;[m
+[31m-	}[m
+[31m-[m
+[31m-	public float getEngineHp() {[m
+[31m-		return engineHp;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setEngineHp(float engineHp) {[m
+[31m-		this.engineHp = engineHp;[m
+[31m-	}[m
+[31m-[m
+[31m-	public boolean isCheckEngineLightOn() {[m
+[31m-		return checkEngineLightOn;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setCheckEngineLightOn(boolean checkEngineLightOn) {[m
+[31m-		this.checkEngineLightOn = checkEngineLightOn;[m
+[31m-	}[m
+[31m-[m
+[31m-	public boolean isEngineCoolantLow() {[m
+[31m-		return engineCoolantLow;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setEngineCoolantLow(boolean engineCoolantLow) {[m
+[31m-		this.engineCoolantLow = engineCoolantLow;[m
+[31m-	}[m
+[31m-[m
+[31m-	public boolean isCruiseControlOn() {[m
+[31m-		return cruiseControlOn;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setCruiseControlOn(boolean cruiseControlOn) {[m
+[31m-		this.cruiseControlOn = cruiseControlOn;[m
+[31m-	}[m
+[31m-[m
+[31m-	public float getEngineRpm() {[m
+[31m-		return engineRpm;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setEngineRpm(float engineRpm) {[m
+[31m-		this.engineRpm = engineRpm;[m
+[31m-	}[m
+[31m-[m
+[31m-	public Tires getTires() {[m
+[31m-		return tires;[m
+[31m-	}[m
+[31m-[m
+[31m-	public void setTires(Tires tires) {[m
+[31m-		this.tires = tires;[m
+[31m-	}[m
+ [m
+ 	@Override[m
+ 	public int hashCode() {[m
+[1mdiff --git a/src/main/java/com/egen/repository/VehicleReadingRepository.java b/src/main/java/com/egen/repository/VehicleReadingRepository.java[m
+[1mindex 09c2725..3093fcd 100644[m
+[1m--- a/src/main/java/com/egen/repository/VehicleReadingRepository.java[m
+[1m+++ b/src/main/java/com/egen/repository/VehicleReadingRepository.java[m
+[36m@@ -1,10 +1,11 @@[m
+ package com.egen.repository;[m
+ [m
+ import com.egen.entity.VehicleReading;[m
+[31m-import org.springframework.data.repository.CrudRepository;[m
+[32m+[m[41m[m
+[32m+[m[32mimport org.springframework.data.jpa.repository.JpaRepository;[m[41m[m
+ import org.springframework.stereotype.Repository;[m
+ [m
+ @Repository[m
+[31m-public interface VehicleReadingRepository extends CrudRepository<VehicleReading,String>  {[m
+[32m+[m[32mpublic interface VehicleReadingRepository extends JpaRepository<VehicleReading,String>  {[m[41m[m
+ [m
+ }[m
+[1mdiff --git a/src/main/java/com/egen/repository/VehicleRepository.java b/src/main/java/com/egen/repository/VehicleRepository.java[m
+[1mindex c87c6f0..085d5ff 100644[m
+[1m--- a/src/main/java/com/egen/repository/VehicleRepository.java[m
+[1m+++ b/src/main/java/com/egen/repository/VehicleRepository.java[m
+[36m@@ -6,13 +6,13 @@[m [mimport java.util.Optional;[m
+ [m
+ import org.springframework.data.jpa.repository.Modifying;[m
+ import org.springframework.data.jpa.repository.Query;[m
+[31m-import org.springframework.data.repository.CrudRepository;[m
+ import org.springframework.data.repository.query.Param;[m
+ import org.springframework.stereotype.Repository;[m
+ import com.egen.entity.Vehicle;[m
+[32m+[m[32mimport org.springframework.data.jpa.repository.JpaRepository;[m[41m[m
+ [m
+ @Repository[m
+[31m-public interface VehicleRepository extends CrudRepository<Vehicle, String> {[m
+[32m+[m[32mpublic interface VehicleRepository extends JpaRepository<Vehicle, String> {[m[41m[m
+ 	Optional<Vehicle> findByVin(String vin);[m
+ [m
+ 	List<Vehicle> findByMake(String make);[m

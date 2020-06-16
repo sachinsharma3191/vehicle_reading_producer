@@ -66,18 +66,6 @@ public class CommonUtils {
 		return StringUtils.contains(source, pattern);
 	}
 
-	public static String formatProductCode(String string, int limit) {
-		StringBuilder product = new StringBuilder();
-		if (!CommonUtils.isEmptyOrNull(string) && limit > 0) {
-			for (int i = 0; i < limit; i++) {
-				if (i == 4 || i == 8 || i == 12) {
-					product.append(ApplicationConstants.PRODUCT_SEPARATOR);
-				}
-				product.append(string.charAt(i));
-			}
-		}
-		return product.toString();
-	}
 
 	public static boolean isEmptyOrNull(StringBuilder content) {
 		return content == null || content.length() == 0 || StringUtils.isBlank(content) && StringUtils.isEmpty(content);

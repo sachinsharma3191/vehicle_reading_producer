@@ -6,9 +6,9 @@ import com.egen.entity.VehicleReading;
 
 public interface VehicleReadingService {
 
-	List<VehicleReading> findAll();
+	public List<VehicleReading> findAll();
 
-	VehicleReading findOne(String id);
+	public VehicleReading findOne(String vin);
 
 	public VehicleReading create(VehicleReading reading);
 

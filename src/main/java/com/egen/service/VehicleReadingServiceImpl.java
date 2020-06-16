@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.egen.entity.VehicleReading;
+import com.egen.exception.ResourceNotFoundException;
 import com.egen.exception.VehicleServiceException;
 import com.egen.repository.VehicleReadingRepository;
 
@@ -32,9 +33,9 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 	}
 
 	@Override
-	public VehicleReading findOne(String id) {
-		return repository.findById(id)
-				.orElseThrow(() -> new VehicleServiceException("Reading  with id" + id + " not found"));
+	public VehicleReading findOne(String vin) {
+		return repository.findByVin(vin)
+				.orElseThrow(() -> new ResourceNotFoundException("Vehicle Reading with vin " + vin + " not found"));
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 	public VehicleReading update(String id, VehicleReading reading) {
 		Optional<VehicleReading> existing = repository.findById(id);
 		if (!existing.isPresent()) {
-			throw new VehicleServiceException("Employee with id " + id + " doesn't exist.");
+			throw new ResourceNotFoundException("Vehicle Reading with vin " + id + " doesn't exist.");
 		}
 		return repository.save(reading);
 	}
@@ -59,7 +60,7 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 	public void delete(String id) {
 		Optional<VehicleReading> existing = repository.findById(id);
 		if (!existing.isPresent()) {
-			throw new VehicleServiceException("Reading with id " + id + " doesn't exist.");
+			throw new ResourceNotFoundException("Vehicle Reading with vin " + id + " doesn't exist.");
 		}
 		repository.delete(existing.get());
 	}

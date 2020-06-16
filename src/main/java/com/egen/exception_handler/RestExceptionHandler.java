@@ -23,10 +23,10 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.egen.exception.AuthException;
 import com.egen.exception.ParseException;
 import com.egen.exception.ValidatorException;
 import com.egen.exception.VehicleServiceException;
+import com.egen.exception.ResourceNotFoundException;
 import com.egen.response.ProductErrorResponse;
 import com.egen.utils.ErrorConstants;
 
@@ -196,7 +196,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	/**
-	 * Handle Product ValidatorException
+	 * Handle ValidatorException
 	 * 
 	 * @param productValidatorException
 	 * @return ProductErrorResponse
@@ -206,22 +206,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		LOGGER.info(ex.getMessage());
 		ProductErrorResponse productErrorResponse = new ProductErrorResponse(BAD_REQUEST);
 		productErrorResponse.setMessage(ErrorConstants.VALIDATION_ERROR);
-		productErrorResponse.setDebugMessage(ex.getMessage());
-		return buildResponseEntity(productErrorResponse);
-	}
-
-	/**
-	 * Handles user Login Exceptions
-	 * 
-	 * @param AuthException
-	 * @param request
-	 * @return ProductErrorResponse
-	 */
-	@ExceptionHandler(AuthException.class)
-	public ResponseEntity<Object> handleUserLoginException(AuthException ex, WebRequest request) {
-		LOGGER.info(ex.getMessage());
-		ProductErrorResponse productErrorResponse = new ProductErrorResponse(HttpStatus.UNAUTHORIZED);
-		productErrorResponse.setMessage(ErrorConstants.LOGIN_ERROR);
 		productErrorResponse.setDebugMessage(ex.getMessage());
 		return buildResponseEntity(productErrorResponse);
 	}
@@ -318,6 +302,23 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleVehicleServiceException(VehicleServiceException ex, WebRequest request) {
 		LOGGER.info(ex.getMessage());
 		ProductErrorResponse productErrorResponse = new ProductErrorResponse(HttpStatus.BAD_REQUEST, ex);
+		productErrorResponse.setMessage(ex.getMessage());
+		LOGGER.log(java.util.logging.Level.SEVERE, ex.getMessage(), ex);
+		productErrorResponse.setDebugMessage(ex.getLocalizedMessage());
+		return buildResponseEntity(productErrorResponse);
+	}
+	
+	/**
+	 * Handles Various Runtime Exceptions
+	 * 
+	 * @param RuntimeException
+	 * @param request
+	 * @return ProductErrorResponse
+	 */
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+		LOGGER.info(ex.getMessage());
+		ProductErrorResponse productErrorResponse = new ProductErrorResponse(HttpStatus.NOT_FOUND, ex);
 		productErrorResponse.setMessage(ex.getMessage());
 		LOGGER.log(java.util.logging.Level.SEVERE, ex.getMessage(), ex);
 		productErrorResponse.setDebugMessage(ex.getLocalizedMessage());
