@@ -39,10 +39,19 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Vehicle create(Vehicle vehicle) {
 		try {
-			return repository.save(vehicle);
+			Optional<Vehicle> existing = repository.findByVin(vehicle.getVin());
+			if (!existing.isPresent()) {
+				return repository.save(vehicle);
+			} else if (existing.isPresent()) {
+				int saved = repository.updateVehicle(vehicle.getVin(), vehicle.getMake(), vehicle.getModel(),
+						vehicle.getYear(), vehicle.getRedLineRpm(), vehicle.getLastServiceDate(),
+						vehicle.getMaxFuelVolume());
+				return saved == 1 ? vehicle : Vehicle.getEmptyInstance();
+			}
 		} catch (Exception e) {
 			throw new VehicleServiceException("Failed to save ", e.getCause());
 		}
+		return vehicle;
 	}
 
 	@Override
@@ -61,7 +70,6 @@ public class VehicleServiceImpl implements VehicleService {
 			throw new VehicleServiceException("Employee with id " + id + " doesn't exist.");
 		}
 		repository.delete(existing.get());
-
 	}
 
 	@Override

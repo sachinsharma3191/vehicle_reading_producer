@@ -1,13 +1,13 @@
 package com.egen.entity;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -16,10 +16,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 @Entity(name = "VEHICLE_READING")
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class VehicleReading {
-
 	@Id
-	private String id;
-
 	@Column
 	private String vin;
 
@@ -53,20 +50,18 @@ public class VehicleReading {
 	@Column(name = "ENGINE_RPM")
 	private float engineRpm;
 
-	@OneToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "id")
+	@OneToOne(cascade = { CascadeType.ALL })
+	@JoinTable(name = "VEHICLE_TYRE_READING", joinColumns = @JoinColumn(name = "VIN"), inverseJoinColumns = @JoinColumn(name = "ID"))
 	Tires tires;
 
 	public VehicleReading() {
 		super();
-		this.id = UUID.randomUUID().toString();
 	}
 
-	public VehicleReading(String id, String vin, float latitude, float longitude, LocalDateTime timestamp,
-			float fuelVolume, float speed, float engineHp, boolean checkEngineLightOn, boolean engineCoolantLow,
-			boolean cruiseControlOn, float engineRpm, Tires tires) {
+	public VehicleReading(String vin, float latitude, float longitude, LocalDateTime timestamp, float fuelVolume,
+			float speed, float engineHp, boolean checkEngineLightOn, boolean engineCoolantLow, boolean cruiseControlOn,
+			float engineRpm, Tires tires) {
 		super();
-		this.id = id;
 		this.vin = vin;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -79,14 +74,6 @@ public class VehicleReading {
 		this.cruiseControlOn = cruiseControlOn;
 		this.engineRpm = engineRpm;
 		this.tires = tires;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getVin() {
@@ -195,7 +182,6 @@ public class VehicleReading {
 		result = prime * result + Float.floatToIntBits(engineHp);
 		result = prime * result + Float.floatToIntBits(engineRpm);
 		result = prime * result + Float.floatToIntBits(fuelVolume);
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + Float.floatToIntBits(latitude);
 		result = prime * result + Float.floatToIntBits(longitude);
 		result = prime * result + Float.floatToIntBits(speed);
@@ -225,11 +211,6 @@ public class VehicleReading {
 		if (Float.floatToIntBits(engineRpm) != Float.floatToIntBits(other.engineRpm))
 			return false;
 		if (Float.floatToIntBits(fuelVolume) != Float.floatToIntBits(other.fuelVolume))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
 			return false;
 		if (Float.floatToIntBits(latitude) != Float.floatToIntBits(other.latitude))
 			return false;

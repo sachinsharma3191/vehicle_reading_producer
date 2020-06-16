@@ -1,7 +1,6 @@
 package com.egen.entity;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +12,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 @Entity(name = "VEHICLE")
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class Vehicle {
-	@Id
-	private String id;
 
+	@Id
 	@Column(name = "VIN")
 	private String vin;
 
@@ -39,13 +37,11 @@ public class Vehicle {
 
 	public Vehicle() {
 		super();
-		this.id = UUID.randomUUID().toString();
 	}
 
-	public Vehicle(String id, String vin, String make, String model, int year, int redlineRpm, int maxFuelVolume,
+	public Vehicle(String vin, String make, String model, int year, int redlineRpm, int maxFuelVolume,
 			LocalDateTime lastServiceDate) {
 		super();
-		this.id = id;
 		this.vin = vin;
 		this.make = make;
 		this.model = model;
@@ -53,14 +49,6 @@ public class Vehicle {
 		this.redlineRpm = redlineRpm;
 		this.maxFuelVolume = maxFuelVolume;
 		this.lastServiceDate = lastServiceDate;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getVin() {
@@ -123,7 +111,6 @@ public class Vehicle {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastServiceDate == null) ? 0 : lastServiceDate.hashCode());
 		result = prime * result + ((make == null) ? 0 : make.hashCode());
 		result = prime * result + maxFuelVolume;
@@ -143,11 +130,6 @@ public class Vehicle {
 		if (getClass() != obj.getClass())
 			return false;
 		Vehicle other = (Vehicle) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (lastServiceDate == null) {
 			if (other.lastServiceDate != null)
 				return false;
@@ -181,6 +163,10 @@ public class Vehicle {
 	public String toString() {
 		return "Vehicle [vin=" + vin + ", make=" + make + ", model=" + model + ", year=" + year + ", redlineRpm="
 				+ redlineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate=" + lastServiceDate + "]";
+	}
+
+	public static Vehicle getEmptyInstance() {
+		return new Vehicle();
 	}
 
 }
