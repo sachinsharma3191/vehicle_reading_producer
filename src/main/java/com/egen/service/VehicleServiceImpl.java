@@ -22,13 +22,7 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	public List<Vehicle> findAll() {
-		List<Vehicle> list = new ArrayList<>();
-		try {
-			list = (List<Vehicle>) repository.findAll();
-		} catch (Exception e) {
-			throw new VehicleServiceException(e.getMessage(), e.getCause());
-		}
-		return list;
+		return repository.findAll();
 	}
 
 	@Override

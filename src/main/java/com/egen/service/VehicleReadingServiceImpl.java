@@ -33,6 +33,11 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 	@Autowired
 	RestTemplate restTemplate;
 
+	
+	public VehicleReadingServiceImpl() {
+		super();
+	}
+
 	@Override
 	public List<VehicleReading> findAll() {
 		List<VehicleReading> list = new ArrayList<>();
@@ -81,28 +86,22 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 			Tires tires = reading.getTires();
 			VehicleAlert alert = null;
 			if (reading.isCheckEngineLightOn()) {
-				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority())
-						.build();
+				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority()).build();
 			}
 			if (reading.isEngineCoolantLow()) {
-				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority())
-						.build();
+				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority()).build();
 			}
 			if (tires.getFrontLeft() > 36 | tires.getFrontRight() < 32) {
-				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority())
-						.build();
+				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority()).build();
 			}
 			if (tires.getFrontRight() > 36 | tires.getFrontRight() < 32) {
-				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority())
-						.build();
+				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority()).build();
 			}
 			if (tires.getRearLeft() < 32 | tires.getRearLeft() < 32) {
-				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority())
-						.build();
+				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority()).build();
 			}
 			if (tires.getRearRight() > 36 | tires.getRearRight() < 32) {
-				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority())
-						.build();
+				alert = VehicleAlert.builder().vin(vehicle.getVin()).priority(AlertPriority.LOW.getPriority()).build();
 			}
 			return sendRequest(alert);
 		}
@@ -111,8 +110,7 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 
 	public boolean sendRequest(VehicleAlert alert) {
 		try {
-			Object response = restTemplate.postForObject("http://localhost:9045/alert/create", alert,
-					Object.class);
+			Object response = restTemplate.postForObject("http://localhost:9045/alert/create", alert, Object.class);
 			if (CommonUtils.isObjectEmptyOrNull(response)) {
 				return false;
 			}
