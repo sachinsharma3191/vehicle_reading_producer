@@ -109,7 +109,6 @@ public class VehicleServiceImplTest {
 		Assert.assertEquals("Vehicle make should match " + make, list.get(0),result.get(0));
 	}
 
-
 	@Test
 	public void findByMakeNotFound() {
 		String make = "Hero Cycle";
