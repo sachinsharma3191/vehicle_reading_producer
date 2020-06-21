@@ -34,7 +34,6 @@ public class VehicleServiceImplTest {
 			return new VehicleServiceImpl();
 		}
 	}
-
 	
 	@Autowired
 	VehicleService service;
@@ -60,7 +59,7 @@ public class VehicleServiceImplTest {
 	public void setUp() {
 		Vehicle  v = getInstance();
 		list = Collections.singletonList(v);
-		
+	
 		Mockito.when(repo.findAll()).thenReturn(list);
 		Mockito.when(repo.findByVin("VISFSD324234")).thenReturn(Optional.of(v));
 		Mockito.when(repo.findByYear(2015)).thenReturn(list);
@@ -115,7 +114,7 @@ public class VehicleServiceImplTest {
 	public void findByMakeNotFound() {
 		String make = "Hero Cycle";
 		List<Vehicle> result = service.findByMake(make);
-		Assert.assertEquals("Vehicle make should not exist  with " + make , Collections.emptyList(),result);
+		Assert.assertEquals("Vehicle make should not exist with " + make , Collections.emptyList(),result);
 	}
 
 }
