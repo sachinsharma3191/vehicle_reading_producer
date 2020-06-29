@@ -29,7 +29,7 @@ node {
     }
     
     stage("Create Environment Variable"){
-    	writeFile file: 'prod.env', text: 'SQS_URL=${SQL_URL}'
+    	writeFile file: 'prod.env', text: 'SQS_URL=' + ${SQL_URL}
     	sh 'cat prod.env'
     }
     
