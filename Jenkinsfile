@@ -31,7 +31,7 @@ node {
     }
 
     stage("Push Docker Image") {
-    	docker.withRegistry('https://registry.hub.docker.com', 'docker-hub') {
+        withDockerRegistry(credentialsId: "dockerhub") {
             sh "docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION}"
         }
     }
