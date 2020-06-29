@@ -1,19 +1,18 @@
 node {
     def DOCKERHUB_REPO = "sachinsharma31261/vehicle_reading_producer"
     def DOCKER_IMAGE_VERSION = "vehicle_reading_producer"
-    def  DB_USER = credentials('DB_USER')
 
 	environment {
         AWS_ACCESS_KEY_ID     = credentials('ACCESS_KEY')
         AWS_SECRET_ACCESS_KEY = credentials('SECRET_KEY')
-       
+        DB_USER = credentials('DB_USER')
     }
 
     stage("clean workspace") {
         deleteDir()
         echo DOCKERHUB_REPO
         echo DOCKER_IMAGE_VERSION
-        echo DB_USER
+        sh "echo $DB_USER"
     }
 
     stage("git checkout") {
