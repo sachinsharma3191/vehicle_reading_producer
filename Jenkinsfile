@@ -42,9 +42,8 @@ node {
         }
         catch(e) {
 			error "Docker Service Failed"
-        }
-        finally {
-            sh "docker container prune -f"
+			echo "Deleting Created Images"
+			sh "docker container prune -f"
             sh "docker image prune -af"
         }
     }
