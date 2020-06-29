@@ -14,29 +14,29 @@ node {
     }
     
 
-    stage("clean workspace") {
+    stage("Clean Workspace") {
         deleteDir()
         echo DOCKERHUB_REPO
         echo DOCKER_IMAGE_VERSION
     }
     
-    stage("git checkout") {
+    stage("Git Checkout") {
         checkout scm
         def GIT_COMMIT = sh(returnStdout: true, script: "git rev-parse HEAD").trim().take(7)
         DOCKER_IMAGE_VERSION = "${BUILD_NUMBER}-${GIT_COMMIT}"
     }
     
-    stage("docker build") {
+    stage("Build Docker Image") {
         sh "docker build -t ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION} ."
     }
 
-    stage("docker push") {
+    stage("Push Docker Image") {
         withDockerRegistry(credentialsId: 'dockerhub') {
             sh "docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION}"
         }
     }
 
-    stage("docker service") {
+    stage("Run Application on Docker Container") {
         try {
         	sh "docker run -e AWS_SECRET_KEY=${AWS_SECRET_KEY} -e AWS_ACCESS_KEY=${AWS_ACCESS_KEY} -e DB_USER=${DB_USER} -e DB_PASSWORD=${DB_PASSWORD} -e VEHICLE_ALERT_TOPIC=${VEHICLE_ALERT_TOPIC} -e SQS_URL=${SQS_URL} -p 9040:9040 ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION}"
         }
