@@ -41,6 +41,7 @@ node {
         	sh "docker run -e AWS_SECRET_KEY=${AWS_SECRET_KEY} -e AWS_ACCESS_KEY=${AWS_ACCESS_KEY} -e DB_USER=${DB_USER} -e DB_PASSWORD=${DB_PASSWORD} -e VEHICLE_ALERT_TOPIC=${VEHICLE_ALERT_TOPIC} -e SQS_URL=${SQS_URL} -p 9040:9040 ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION}"
         }
         catch(e) {
+        	echo e
 			error "Docker Service Failed"
 			echo "Deleting Created Images"
 			sh "docker container prune -f"
