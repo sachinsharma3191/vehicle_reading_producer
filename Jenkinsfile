@@ -9,8 +9,6 @@ node {
         DB_URL  =  credentials('DB_URL ')
         DB_USER = credentials('DB_USER')
         DB_PASSWORD  = credentials('DB_PASSWORD')
-        DB_DIALECT = credentials('DB_DIALECT')
-        DB_PLATFORM = credentials('DB_PLATFORM')
         SQS_URL = credentials('SQS_URL')
         VEHICLE_ALERT_TOPIC = credentials('VEHICLE_ALERT_TOPIC')
     }
@@ -28,11 +26,6 @@ node {
         DOCKER_IMAGE_VERSION = "${BUILD_NUMBER}-${GIT_COMMIT}"
     }
     
-    stage("Create Environment Variable"){
-    	writeFile file: 'prod.env', text: 'SQS_URL=' + ${SQL_URL}
-    	sh 'cat prod.env'
-    }
-    
     stage("docker build") {
         sh "docker build -t ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION} ."
     }
@@ -46,7 +39,7 @@ node {
     stage("docker service") {
         try {
         	sh "docker rm -f VehicleAlertConsumer || true"
-        	sh "docker run --env-file /prod.env -p 9040:9040 -d --name VehicleAlertConsumer ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION}"
+        	sh "docker run -e AWS_SECRET_KEY=${AWS_SECRET_KEY} -e AWS_ACCESS_KEY=${AWS_ACCESS_KEY} -e DB_USER=${DB_USER} -e DB_PASSWORD=${DB_PASSWORD} -e VEHICLE_ALERT_TOPIC=${VEHICLE_ALERT_TOPIC} -e SQS_URL=${SQS_URL} -p 9040:9040 -d --name VehicleAlertConsumer ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION}"
         }
         catch(e) {
 			error "Docker Service Failed"
