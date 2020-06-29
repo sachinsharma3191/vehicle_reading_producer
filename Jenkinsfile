@@ -5,6 +5,8 @@ node {
 
     stage("clean workspace") {
         deleteDir()
+        echo DOCKERHUB_REPO
+        echo DOCKER_SERVICE_ID
     }
 
     stage("git checkout") {
@@ -35,11 +37,9 @@ node {
                 if [ \$(docker service ls --filter name=${DOCKER_SERVICE_ID} --quiet | wc -l) -eq 0 ]; then
                   docker service create \
                     --replicas 1 \
+                    --env-file ./prop.env \
                     --name ${DOCKER_SERVICE_ID} \
                     --publish 9040:9040 \
-                    --secret spring.datasource.url \
-                    --secret spring.datasource.username \
-                    --secret spring.datasource.password \
                     ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION}
                 else
                   docker service update \
