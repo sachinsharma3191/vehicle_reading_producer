@@ -35,7 +35,6 @@ node {
     stage("Push Docker Image") {
         	sh 'docker login --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD'
             sh "docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION}"
-        }
     }
 
     stage("Run Application on Docker Container") {
