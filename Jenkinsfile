@@ -11,6 +11,8 @@ node {
         DB_PASSWORD  = credentials('DB_PASSWORD')
         SQS_URL = credentials('SQS_URL')
         VEHICLE_ALERT_TOPIC = credentials('VEHICLE_ALERT_TOPIC')
+        DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_USERNAME')
+        DOCKER_HUB_PASSWORD = credentials('DOCKER_HUB_PASSWORD')
     }
     
 
@@ -31,7 +33,7 @@ node {
     }
 
     stage("Push Docker Image") {
-        withDockerRegistry(credentialsId: "dockerhub") {
+        	sh 'docker login --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD'
             sh "docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION}"
         }
     }
