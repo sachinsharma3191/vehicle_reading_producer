@@ -10,7 +10,7 @@ import com.amazonaws.services.sns.AmazonSNS;
 @Service
 public class VehicleReadingAlertSnsService {
 
-	@Value("${Vehicle_Alert_Topic}")
+	@Value("${VEHICLE_ALERT_TOPIC}")
 	String topic;
 
 	private final NotificationMessagingTemplate notificationMessagingTemplate;
