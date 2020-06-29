@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +19,16 @@ import com.egen.exception.ResourceNotFoundException;
 import com.egen.exception.VehicleServiceException;
 import com.egen.repository.VehicleReadingRepository;
 import com.egen.repository.VehicleRepository;
-import com.egen.utils.CommonUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 @Transactional
 public class VehicleReadingServiceImpl implements VehicleReadingService {
+
+	Logger log = Logger.getLogger(VehicleReadingServiceImpl.class.getName());
+
+	@Autowired
+	VehicleReadingAlertSnsService snsService;
 
 	@Autowired
 	VehicleReadingRepository repository;
@@ -33,7 +39,9 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 	@Autowired
 	RestTemplate restTemplate;
 
-	
+	@Autowired
+	ObjectMapper objectMapper;
+
 	public VehicleReadingServiceImpl() {
 		super();
 	}
@@ -61,6 +69,7 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 			createAlert(reading);
 			return repository.save(reading);
 		} catch (Exception e) {
+			log.info(e + "");
 			throw new VehicleServiceException("Failed to save ", e.getCause());
 		}
 	}
@@ -78,7 +87,7 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 					.build();
 			return sendRequest(alert);
 		}
-		if (reading.getFuelVolume() < vehicle.getMaxFuelVolume() / 10) {
+		if (reading.getFuelVolume() < (vehicle.getMaxFuelVolume() / 10)) {
 			VehicleAlert alert = VehicleAlert.builder().vin(vehicle.getVin())
 					.priority(AlertPriority.MEDIUM.getPriority()).build();
 			return sendRequest(alert);
@@ -110,12 +119,10 @@ public class VehicleReadingServiceImpl implements VehicleReadingService {
 
 	public boolean sendRequest(VehicleAlert alert) {
 		try {
-			Object response = restTemplate.postForObject("http://localhost:9045/alert/create", alert, Object.class);
-			if (CommonUtils.isObjectEmptyOrNull(response)) {
-				return false;
-			}
+			snsService.send("Vehicle Reading Service", objectMapper.writeValueAsString(alert));
 		} catch (Exception e) {
-			throw new VehicleServiceException("Failed to save alerts", e.getCause());
+			log.info(e + "");
+			throw new VehicleServiceException("Failed to send alerts " + e.getCause());
 		}
 		return true;
 	}

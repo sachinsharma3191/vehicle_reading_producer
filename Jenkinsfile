@@ -1,6 +1,6 @@
 node {
-    def DOCKERHUB_REPO = "sachinsharma31261/vehicle_reading_service"
-    def DOCKER_SERVICE_ID = "vehicle_reading_service"
+    def DOCKERHUB_REPO = "sachinsharma31261/vehicle_reading_producer"
+    def DOCKER_SERVICE_ID = "vehicle_reading_producer"
     def DOCKER_IMAGE_VERSION = ""
 
     stage("clean workspace") {
