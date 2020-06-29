@@ -13,7 +13,6 @@ node {
         VEHICLE_ALERT_TOPIC = credentials('VEHICLE_ALERT_TOPIC')
     }
     
-
     stage("Clean Workspace") {
         deleteDir()
         echo DOCKERHUB_REPO
