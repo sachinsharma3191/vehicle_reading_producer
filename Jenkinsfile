@@ -2,6 +2,7 @@ node {
     def DOCKERHUB_REPO = "sachinsharma31261/vehicle_reading_producer"
     def DOCKER_IMAGE_VERSION = "vehicle_reading_producer"
 
+	
 	environment {
         AWS_ACCESS_KEY_ID     = credentials('ACCESS_KEY')
         AWS_SECRET_ACCESS_KEY = credentials('SECRET_KEY')
@@ -13,21 +14,25 @@ node {
         SQS_URL = credentials('SQS_URL')
         VEHICLE_ALERT_TOPIC = credentials('VEHICLE_ALERT_TOPIC')
     }
+    
 
     stage("clean workspace") {
         deleteDir()
         echo DOCKERHUB_REPO
         echo DOCKER_IMAGE_VERSION
-        sh "echo $DB_USER"	
     }
-
+    
     stage("git checkout") {
         checkout scm
-
         def GIT_COMMIT = sh(returnStdout: true, script: "git rev-parse HEAD").trim().take(7)
         DOCKER_IMAGE_VERSION = "${BUILD_NUMBER}-${GIT_COMMIT}"
     }
-
+    
+    stage("Create Environment Variable"){
+    	writeFile file: 'prod.env', text: 'SQS_URL=${SQL_URL}'
+    	sh 'cat prod.env'
+    }
+    
     stage("docker build") {
         sh "docker build -t ${DOCKERHUB_REPO}:${DOCKER_IMAGE_VERSION} ."
     }
