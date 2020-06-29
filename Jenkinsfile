@@ -5,14 +5,20 @@ node {
 	environment {
         AWS_ACCESS_KEY_ID     = credentials('ACCESS_KEY')
         AWS_SECRET_ACCESS_KEY = credentials('SECRET_KEY')
+        DB_URL  =  credentials('DB_URL ')
         DB_USER = credentials('DB_USER')
+        DB_PASSWORD  = credentials('DB_PASSWORD')
+        DB_DIALECT = credentials('DB_DIALECT')
+        DB_PLATFORM = credentials('DB_PLATFORM')
+        SQS_URL = credentials('SQS_URL')
+        VEHICLE_ALERT_TOPIC = credentials('VEHICLE_ALERT_TOPIC')
     }
 
     stage("clean workspace") {
         deleteDir()
         echo DOCKERHUB_REPO
         echo DOCKER_IMAGE_VERSION
-        sh "echo $DB_USER"
+        sh "echo $DB_USER"	
     }
 
     stage("git checkout") {
